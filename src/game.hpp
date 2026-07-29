@@ -4,7 +4,7 @@
 class Game{
     private:
         Spaceship spaceship;
-
+        void DeleteInactiveLasers();
     public:
         Game();
         ~Game();
