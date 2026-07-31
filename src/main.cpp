@@ -1,6 +1,6 @@
 #include <raylib.h> 
 #include "game.hpp"
-#include "laser.hpp"
+#include "obstacle.hpp"
 
 int main() 
 {
@@ -12,6 +12,7 @@ int main()
     SetTargetFPS(60);
 
     Game game;
+    Obstacle obstacle= Obstacle({100,100});
 
     while(WindowShouldClose()==false){
 
@@ -20,7 +21,7 @@ int main()
         BeginDrawing();
         ClearBackground(grey); 
         game.Draw();
-
+        obstacle.Draw();
         EndDrawing();  
     }
 
