@@ -1,6 +1,6 @@
 #include "obstacle.hpp"
 
-std::vector<std::vector<int>> Obstacle::grid = {
+std::vector<std::vector<int>> Obstacle:: grid = {
     {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
     {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0},
     {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
@@ -19,8 +19,6 @@ std::vector<std::vector<int>> Obstacle::grid = {
 Obstacle::Obstacle(Vector2 position)
 {
     this->position= position;
-
-    
 
     for(unsigned int row=0; row<grid.size(); ++row){
         for(unsigned int column=0; column< grid[0].size(); ++column){
