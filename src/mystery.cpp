@@ -26,6 +26,16 @@ void MysteryShip::Spawn(){
     alive= true;
 }
 
+Rectangle MysteryShip::getRect()
+{
+    if(alive){
+        return {position.x, position.y, float(image.width), float(image.height)};
+    }
+    else{
+        return {position.x, position.y, 0, 0};
+    }
+}
+
 void MysteryShip::Update(){
     if(alive){
         position.x+=speed;

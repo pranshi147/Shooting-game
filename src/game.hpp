@@ -15,6 +15,7 @@ class Game{
         void MoveAliens();
         void MoveDownAliens(int distance);
         void AlienShootLaser();
+        void CheckForCollisions();
         int aliensDirection;
         std::vector<Laser> alienLasers;
         constexpr static float alienLaserShootInterval=0.35;

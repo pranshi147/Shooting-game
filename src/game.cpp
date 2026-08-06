@@ -38,6 +38,8 @@ void Game::Update(){
 
     DeleteInactiveLasers();
     mysteryship.Update();
+
+    CheckForCollisions();
 }
 
 void Game::Draw(){
@@ -162,3 +164,75 @@ void Game::AlienShootLaser()
         timeLastAlienFired= GetTime();
     }
 }
+
+void Game::CheckForCollisions()
+{
+    for(auto& laser: spaceship.lasers){
+        auto it= aliens.begin();
+        while(it!= aliens.end()){
+            if(CheckCollisionRecs(it->getRect(), laser.getRect())){
+                it= aliens.erase(it);
+                laser.active= false;
+            }
+            else{
+                ++it;
+            }
+        }
+
+        for(auto& obstacle: obstacles){
+            auto it= obstacle.blocks.begin();
+            while(it!= obstacle.blocks.end()){
+                if(CheckCollisionRecs(it->getRect(), laser.getRect())){
+                    it= obstacle.blocks.erase(it);
+                    laser.active= false;
+                }
+                else{
+                    ++it;
+                }
+            }
+        }
+        if(CheckCollisionRecs(mysteryship.getRect(), laser.getRect())){
+            mysteryship.alive= false;
+            laser.active= false;
+        }
+    }
+
+    for(auto& laser: alienLasers){
+        if(CheckCollisionRecs(laser.getRect(), spaceship.getRect())){
+            laser.active= false;
+            std::cout<<"Spaceship Hit"<<std::endl;
+        }
+
+        for(auto& obstacle: obstacles){
+            auto it= obstacle.blocks.begin();
+            while(it!= obstacle.blocks.end()){
+                if(CheckCollisionRecs(it->getRect(), laser.getRect())){
+                    it= obstacle.blocks.erase(it);
+                    laser.active= false;
+                }
+                else{
+                    ++it;
+                }
+            }
+        }
+    }
+
+    for(auto& alien: aliens){
+        for(auto& obstacle: obstacles){
+            auto it= obstacle.blocks.begin();
+            while(it!= obstacle.blocks.end()){
+                if(CheckCollisionRecs(it->getRect(), alien.getRect())){
+                    it= obstacle.blocks.erase(it);
+                }
+                else{
+                    it++;
+                }
+            }
+        }
+
+        if(CheckCollisionRecs(alien.getRect(), spaceship.getRect())){
+            std::cout<<"Spaceship hit by Alien"<<std::endl;
+        }
+    }
+}
+ 
