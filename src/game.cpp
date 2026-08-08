@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include <iostream>
+#include <fstream>
 
 void Game::GameOver()
 {
@@ -15,9 +16,43 @@ void Game::InitGame()
     timeLastSpawn=0.0;
     lives=3;
     score=0;
+    highscore=loadHighscoreFromFile();
     run=true;
     mysteryShipSpawnInterval= GetRandomValue(10,20);
 
+}
+
+void Game::CheckForHighscore()
+{
+    if(score>highscore){
+        highscore= score;
+        saveHighscoreToFile(highscore);
+    }
+}
+
+void Game::saveHighscoreToFile(int highscore)
+{
+    std::ofstream highscoreFile("highscore.txt");
+    if(highscoreFile.is_open()){
+        highscoreFile<<highscore;
+        highscoreFile.close();
+    }
+    else{
+        std::cerr<<"Failed to save highscore to file"<<std::endl;
+    }
+}
+
+int Game::loadHighscoreFromFile(){
+    int loadedHighscore=0;
+    std::ifstream highscoreFile("highscore.txt");
+    if(highscoreFile.is_open()){
+        highscoreFile>>loadedHighscore;
+        highscoreFile.close();
+    }
+    else{
+        std::cerr<<"Failed to load highscore from file."<<std::endl;
+    }
+    return loadedHighscore;
 }
 
 Game::Game()
@@ -212,6 +247,7 @@ void Game::CheckForCollisions()
                 else if(it->type==3){
                     score+=300;
                 }
+                CheckForHighscore();
                 it= aliens.erase(it);
                 laser.active= false;
             }
@@ -236,6 +272,7 @@ void Game::CheckForCollisions()
             mysteryship.alive= false;
             laser.active= false;
             score+=500;
+            CheckForHighscore();
         }
     }
 

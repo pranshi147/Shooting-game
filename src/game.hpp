@@ -26,6 +26,9 @@ class Game{
         void GameOver();
         void Reset();
         void InitGame();
+        void CheckForHighscore();
+        void saveHighscoreToFile(int highscore);
+        int loadHighscoreFromFile();
      public:
         Game();
         ~Game();
@@ -35,4 +38,5 @@ class Game{
         bool run;
         int lives;
         int score;
+        int highscore;
 };
