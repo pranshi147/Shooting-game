@@ -23,10 +23,15 @@ class Game{
         MysteryShip mysteryship;
         float mysteryShipSpawnInterval;
         float timeLastSpawn; 
+        void GameOver();
+        void Reset();
+        void InitGame();
      public:
         Game();
         ~Game();
         void Draw();
         void Update();
         void HandleInput();
+        bool run;
+        int lives;
 };
