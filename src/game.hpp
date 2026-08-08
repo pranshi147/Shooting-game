@@ -34,4 +34,5 @@ class Game{
         void HandleInput();
         bool run;
         int lives;
+        int score;
 };

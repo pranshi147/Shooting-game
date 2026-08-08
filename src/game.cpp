@@ -14,6 +14,7 @@ void Game::InitGame()
     timeLastAlienFired=0.0;
     timeLastSpawn=0.0;
     lives=3;
+    score=0;
     run=true;
     mysteryShipSpawnInterval= GetRandomValue(10,20);
 
@@ -165,7 +166,7 @@ std::vector<Alien> Game::CreateAliens()
 
 void Game::MoveAliens(){
     for(auto& alien: aliens){
-        if(alien.position.x + alien.alienImages[alien.type-1].width > GetScreenWidth()-25){
+        if(alien.position.x + alien.alienImages[alien.type-1].width > GetScreenWidth()-25 ){
             aliensDirection= -1;
             
         }
@@ -201,6 +202,16 @@ void Game::CheckForCollisions()
         auto it= aliens.begin();
         while(it!= aliens.end()){
             if(CheckCollisionRecs(it->getRect(), laser.getRect())){
+
+                if(it->type==1){
+                    score+=100;
+                }
+                else if(it->type==2){
+                    score+=200;
+                }
+                else if(it->type==3){
+                    score+=300;
+                }
                 it= aliens.erase(it);
                 laser.active= false;
             }
@@ -224,6 +235,7 @@ void Game::CheckForCollisions()
         if(CheckCollisionRecs(mysteryship.getRect(), laser.getRect())){
             mysteryship.alive= false;
             laser.active= false;
+            score+=500;
         }
     }
 
