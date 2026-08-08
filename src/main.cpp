@@ -17,15 +17,17 @@ int main()
     int windowHeight= 700;
 
     InitWindow(windowWidth+ offset, windowHeight+ 2*offset, "C++ Space Invaders");
-    SetTargetFPS(60);
+    InitAudioDevice();
+
 
     Font font= LoadFontEx("Font/monogram.ttf", 64, 0, 0);
     Texture2D spaceshipImage= LoadTexture("Graphics/spaceship.png");
+    SetTargetFPS(60);
 
     Game game;
 
     while(WindowShouldClose()==false){
-
+        UpdateMusicStream(game.music);
         game.HandleInput();
         game.Update();
         BeginDrawing();
@@ -34,7 +36,7 @@ int main()
         DrawLineEx({25, 730}, {775, 730}, 3, yellow);
         if(game.run){
             DrawTextEx(font, "LEVEL 01", {570, 740}, 34, 2, yellow);
-        }
+        } 
         else{
             DrawTextEx(font, "GAME OVER", {570, 740}, 34, 2, yellow);
         }
@@ -57,4 +59,5 @@ int main()
     }
 
     CloseWindow();
+    CloseAudioDevice();
 }

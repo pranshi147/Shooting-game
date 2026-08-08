@@ -57,21 +57,18 @@ int Game::loadHighscoreFromFile(){
 
 Game::Game()
 {
-    obstacles= CreateObstacles();
-    aliens= CreateAliens();
-    aliensDirection=1;
-    timeLastAlienFired=0.0;
-    timeLastSpawn=0.0;
-    lives=3;
-    run=true;
-    mysteryShipSpawnInterval= GetRandomValue(10,20);
-    mysteryship.Spawn();
+    
+    music =LoadMusicStream("Sounds/music.ogg");
+    explosionSound= LoadSound("Sounds/explosion.ogg");
+    PlayMusicStream(music);
     InitGame();
 }
 
 Game::~Game()
 {
     Alien::UnloadImages();
+    UnloadMusicStream(music);
+    UnloadSound(explosionSound);
 }
 
 void Game::Update(){
@@ -237,7 +234,7 @@ void Game::CheckForCollisions()
         auto it= aliens.begin();
         while(it!= aliens.end()){
             if(CheckCollisionRecs(it->getRect(), laser.getRect())){
-
+                PlaySound(explosionSound);
                 if(it->type==1){
                     score+=100;
                 }
@@ -273,6 +270,7 @@ void Game::CheckForCollisions()
             laser.active= false;
             score+=500;
             CheckForHighscore();
+            PlaySound(explosionSound);
         }
     }
 

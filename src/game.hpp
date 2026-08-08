@@ -29,6 +29,7 @@ class Game{
         void CheckForHighscore();
         void saveHighscoreToFile(int highscore);
         int loadHighscoreFromFile();
+        Sound explosionSound;
      public:
         Game();
         ~Game();
@@ -39,4 +40,5 @@ class Game{
         int lives;
         int score;
         int highscore;
+        Music music;
 };
